@@ -1,27 +1,45 @@
 #include <string>
+#include <iostream>
 
 using namespace std;
+
+struct tNode
+{
+    int key;
+    string val;
+    tNode * right;
+    tNode * left;
+    tNode(int k, string v)
+    : key (k), val (v), right (nullptr), left(nullptr) 
+    {}
+};
 
 class BinaryTree
 {
   public:
-    BinaryTree();
+    BinaryTree()
+    : root (nullptr)
+    {}
     ~BinaryTree();
     void makeEmpty();
-    bool isEmpty();
+    bool isEmpty()
+    {
+        return root == nullptr;
+    }
     bool isFull();
     int getLength();
     int getItem(int key);
-    void putItem(int key);
+    void putItem(int key, int val);
     void deleteItem(int key);
-    void print();
-  private:
-    struct tNode
+    void inOrderTrav(tNode * root)
     {
-        int key;
-	string val;
-	tNode * right;
-	tNode * left;
-    };
+        if( root != nullptr)
+	{
+	    inOrderTrav(root->right);
+	    cout << "key: " << root->key  << " value: " << root->val << endl;
+	    inOrderTrav(root->left);
+	}
+    }
+  private:
     tNode * root;
 };
