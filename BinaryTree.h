@@ -20,7 +20,8 @@ class BinaryTree
     BinaryTree()
     : root (nullptr)
     {}
-    ~BinaryTree();
+    ~BinaryTree()
+    {}
     void makeEmpty();
     bool isEmpty()
     {
@@ -29,15 +30,35 @@ class BinaryTree
     bool isFull();
     int getLength();
     int getItem(int key);
-    void putItem(int key, int val);
-    void deleteItem(int key);
-    void inOrderTrav(tNode * root)
+    void putItem(int key, string val)
     {
-        if( root != nullptr)
+	tNode * newNode = new tNode(key,val);
+	insert(root,newNode);
+    }
+    void insert(tNode * & tempRoot, tNode * newNode)
+    {
+        if(tempRoot == nullptr)
+	    tempRoot = newNode;
+        else if ( newNode->key > tempRoot->key )
+	    insert(tempRoot->right, newNode);
+        else
+            insert(tempRoot->left, newNode);	   
+    }
+    void deleteItem(int key);
+    void print()
+    {
+	if(isEmpty())
+	    cout << "the list is empty\n";
+	else
+	    inOrderTrav(root);
+    }
+    void inOrderTrav(tNode * tempRoot)
+    {
+        if( tempRoot != nullptr)
 	{
-	    inOrderTrav(root->right);
-	    cout << "key: " << root->key  << " value: " << root->val << endl;
-	    inOrderTrav(root->left);
+	    inOrderTrav(tempRoot->left);
+	    cout << "key: " << tempRoot->key  << " value: " << tempRoot->val << endl;
+	    inOrderTrav(tempRoot->right);
 	}
     }
   private:
