@@ -11,8 +11,9 @@ void test_constr()
 void test_insert()
 {
     BinaryTree myTree;
-    for(int i = 0; i < 3; ++i)
-        myTree.putItem(i,"test");
+    myTree.putItem(2,"two");
+    myTree.putItem(1,"one");
+    myTree.putItem(3,"three");
     cout << "test print\n";
     myTree.print();
 }

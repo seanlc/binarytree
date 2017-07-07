@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -45,12 +46,26 @@ class BinaryTree
             insert(tempRoot->left, newNode);	   
     }
     void deleteItem(int key);
+    void visual_rep(tNode * tRoot, int level)
+    {
+	if(tRoot != nullptr)
+	{
+	    visual_rep(tRoot->right, ++level);
+	    cout << setw(10 * level) << "key: " << tRoot->key << " val: " << tRoot->val << endl;
+	    level = 0;
+	    visual_rep(tRoot->left, ++level);
+	}
+    }
     void print()
     {
 	if(isEmpty())
 	    cout << "the list is empty\n";
 	else
+	{
+	    int level = 0;
+	    visual_rep(root, level);
 	    inOrderTrav(root);
+	}
     }
     void inOrderTrav(tNode * tempRoot)
     {
