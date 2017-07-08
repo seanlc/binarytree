@@ -52,7 +52,7 @@ void test_deleteItem()
     myTree.putItem(4,"four");
     myTree.putItem(0,"zero");
     myTree.print();
-    for(int i = 2; i < 5; ++i)
+    for(int i = 0; i < 5; ++i)
         myTree.deleteItem(i);
 }
 

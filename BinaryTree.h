@@ -46,13 +46,27 @@ class BinaryTree
     }
     void deleteItem(int key)
     {
-        tNode * foundNode = findNode(root,key);
-	cout << "return val of findNode: " << foundNode << endl;
+	tNode * temp = nullptr;
+	tNode * foundNodePar;
+	tNode * foundNode;
+
+        foundNode = findNode(root, key);
+	foundNodePar = findParentOfNode(root, temp, key);
+
 	if(foundNode == nullptr)
 	{
 	    fprintf(stderr, "node not found with key %d\n", key);
 	    exit(-1);
 	}
+	cout << "return val of findNode: " << foundNode
+	     << " with key " << foundNode->key;
+	if (foundNodePar != nullptr)
+	{
+	    cout  << " with parent " << foundNodePar 
+	          << " with key " << foundNodePar->key << endl;
+	}
+	else
+	    cout << endl;
 	// node has one child
 	if( (foundNode->right == nullptr && foundNode->left != nullptr)
 	|| ( foundNode->right != nullptr && foundNode->left == nullptr))
@@ -79,19 +93,29 @@ class BinaryTree
     int numNodes;
     tNode * findNode(tNode * tRoot, int key)
     {
-	if(tRoot != nullptr)
-	    cout << "comp key " << key << " with node key " << tRoot->key << endl;
 	if(tRoot == nullptr)
 	    return nullptr;
         if (tRoot->key == key)
 	{
-	    cout << key << " == " << tRoot->key << " key found" << endl;
 	    return tRoot;
 	}
 	else if(key > tRoot->key)
 	    return findNode(tRoot->right, key);
 	else if(key < tRoot->key)
 	    return findNode(tRoot->left, key);
+	return nullptr;
+    }
+    tNode * findParentOfNode(tNode * tRoot, tNode * & par, int key)
+    {
+	if(tRoot == nullptr)
+	    return nullptr;
+        if (tRoot->key == key)
+	    return par;
+	par = tRoot;
+	if(key > tRoot->key)
+	    return findParentOfNode(tRoot->right, par, key);
+	else if(key < tRoot->key)
+	    return findParentOfNode(tRoot->left, par, key);
 	return nullptr;
     }
     void visual_rep(tNode * tRoot, int level)
