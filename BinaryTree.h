@@ -22,8 +22,14 @@ class BinaryTree
     : root (nullptr), numNodes (0)
     {}
     ~BinaryTree()
-    {}
-    void makeEmpty();
+    {
+        makeEmpty();
+    }
+    void makeEmpty()
+    {
+        deleteTree(root);
+	root = nullptr;
+    }
     bool isEmpty()
     {
         return root == nullptr;
@@ -58,25 +64,17 @@ class BinaryTree
 	    fprintf(stderr, "node not found with key %d\n", key);
 	    exit(-1);
 	}
-	cout << "return val of findNode: " << foundNode
-	     << " with key " << foundNode->key;
-	if (foundNodePar != nullptr)
-	{
-	    cout  << " with parent " << foundNodePar 
-	          << " with key " << foundNodePar->key << endl;
-	}
-	else
-	    cout << endl;
 	// node has one child
 	if( (foundNode->right == nullptr && foundNode->left != nullptr)
 	|| ( foundNode->right != nullptr && foundNode->left == nullptr))
-	    deleteSingleChildNode(foundNode);
+	    deleteSingleChildNode(foundNode, foundNodePar);
 	// node has two children
 	else if(foundNode->right != nullptr && foundNode->left != nullptr)
-	    deleteDoubleChildNode(foundNode);
+	    deleteDoubleChildNode(foundNode, foundNodePar);
 	// node has no children
 	else
-	    deleteNoChildNode(foundNode);
+	    deleteNoChildNode(foundNode, foundNodePar);
+	--numNodes;
     }
     void print()
     {
@@ -136,6 +134,15 @@ class BinaryTree
 	    inOrderTrav(tempRoot->right);
 	}
     }
+    void deleteTree(tNode * tempRoot)
+    {
+        if( tempRoot != nullptr)
+	{
+	    deleteTree(tempRoot->right);
+	    deleteTree(tempRoot->left);
+	    deleteItem(tempRoot->key);
+	}
+    }
     void insert(tNode * & tempRoot, tNode * newNode)
     {
         if(tempRoot == nullptr)
@@ -145,16 +152,42 @@ class BinaryTree
         else
             insert(tempRoot->right, newNode);	   
     }
-    void deleteSingleChildNode(tNode * & node)
+    void deleteSingleChildNode(tNode * & node, tNode * & nodePar)
     {
-        perror("deleteSingleChildNode not implemented\n");
+	tNode * grandChild;
+	if(node->right != nullptr)
+	    grandChild = node->right;
+	else
+	    grandChild = node->left;
+
+        if(nodePar != nullptr)
+	{
+	    if(nodePar->right == nullptr)
+		nodePar->right = grandChild;
+	    else
+		nodePar->left = grandChild;
+	}
+	else
+	{
+	    root = grandChild;
+	    cout << "setting root to " << root << endl;
+	}
+	delete node;
     }
-    void deleteDoubleChildNode(tNode * & node)
+    void deleteDoubleChildNode(tNode * & node, tNode * & nodePar)
     {
         perror("deleteDoubleChildNode not implemented\n");
     }
-    void deleteNoChildNode(tNode* & node)
+    void deleteNoChildNode(tNode* & node, tNode * nodePar)
     {
-        perror("deleteNoChildNode not implemented\n");
+	
+	if(nodePar != nullptr)
+	{
+	    if( nodePar->right != nullptr )
+	        nodePar->right = nullptr;
+	    else
+	        nodePar->left = nullptr;
+	}
+	delete node;
     }
 };

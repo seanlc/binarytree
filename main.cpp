@@ -6,6 +6,13 @@ using namespace std;
 void test_constr()
 {
     BinaryTree myTree;
+    myTree.putItem(50,"test");
+    myTree.putItem(75,"test");
+    myTree.putItem(25,"test");
+    myTree.putItem(15,"test");
+    myTree.putItem(35,"test");
+    myTree.putItem(85,"test");
+    myTree.putItem(65,"test");
 }
 
 void test_insert()
@@ -54,14 +61,29 @@ void test_deleteItem()
     myTree.print();
     for(int i = 0; i < 5; ++i)
         myTree.deleteItem(i);
+    myTree.print();
+}
+
+void test_makeEmpty()
+{
+    BinaryTree myTree;
+    myTree.putItem(2,"two");
+    myTree.putItem(1,"one");
+    myTree.putItem(3,"three");
+    myTree.putItem(4,"four");
+    myTree.putItem(0,"zero");
+    myTree.print();
+    myTree.makeEmpty();
+    myTree.print();
 }
 
 int main()
 {
-//    test_constr();
+    test_constr();
 //    test_insert();
 //    test_getItem();
 //    test_getLength();
-    test_deleteItem();
+//    test_deleteItem();
+//    test_makeEmpty();
     return 0;
 }
