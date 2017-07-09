@@ -86,6 +86,11 @@ class BinaryTree
 	    visual_rep(root, level);
 	}
     }
+    void largestChildOfLeftTree()
+    {
+        cout << "the largest child of the left subtree is "
+	     << getLargestChild(root->left)->key << endl;
+    }
   private:
     tNode * root;
     int numNodes;
@@ -176,11 +181,36 @@ class BinaryTree
     }
     void deleteDoubleChildNode(tNode * & node, tNode * & nodePar)
     {
-        perror("deleteDoubleChildNode not implemented\n");
+	tNode * temp = nullptr;
+        tNode * replacementNode = getLargestChild(node->left);
+	tNode * replacementNodePar = findParentOfNode(root, temp, replacementNode->key);
+
+
+	// set replamentNodePar-> replacementNode to nullptr
+	
+	if(replacementNodePar != nullptr)
+	{
+	    if(replacementNodePar->right != nullptr)
+	    {
+	        if(replacementNodePar->right == replacementNode)
+	            replacementNodePar->right = nullptr;
+	    }
+	    if(replacementNodePar->left != nullptr)
+	    {
+	        if(replacementNodePar->right == replacementNode)
+	            replacementNodePar->right = nullptr;
+	    }
+	}
+
+        // set replacementNode->right and ->left to be node->right and ->left
+	node->key = replacementNode->key;
+	node->val = replacementNode->val;
+
+	delete(replacementNode);
+
     }
     void deleteNoChildNode(tNode* & node, tNode * nodePar)
     {
-	
 	if(nodePar != nullptr)
 	{
 	    if( nodePar->right != nullptr )
@@ -189,5 +219,12 @@ class BinaryTree
 	        nodePar->left = nullptr;
 	}
 	delete node;
+    }
+    tNode * getLargestChild(tNode * tRoot)
+    {
+        if(tRoot->right != nullptr)
+	    return getLargestChild(tRoot->right);
+        else
+	    return tRoot;	
     }
 };

@@ -53,15 +53,18 @@ void test_getLength()
 void test_deleteItem()
 {
     BinaryTree myTree;
-    myTree.putItem(2,"two");
-    myTree.putItem(1,"one");
-    myTree.putItem(3,"three");
-    myTree.putItem(4,"four");
-    myTree.putItem(0,"zero");
+    myTree.putItem(50,"two");
+    myTree.putItem(75,"one");
+    myTree.putItem(25,"three");
+    myTree.putItem(15,"four");
+    myTree.putItem(35,"zero");
+    myTree.putItem(65,"zero");
+    myTree.putItem(85,"zero");
+    cout << "original tree\n";
     myTree.print();
-    for(int i = 0; i < 5; ++i)
-        myTree.deleteItem(i);
-    myTree.print();
+    myTree.deleteItem(50);
+    cout << "after deletion\n";
+    myTree.print(); 
 }
 
 void test_makeEmpty()
@@ -77,13 +80,26 @@ void test_makeEmpty()
     myTree.print();
 }
 
+void test_largest_child()
+{
+    BinaryTree myTree;
+    myTree.putItem(50,"two");
+    myTree.putItem(25,"one");
+    myTree.putItem(75,"three");
+    myTree.putItem(15,"four");
+    myTree.putItem(35,"zero");
+    myTree.print();
+    myTree.largestChildOfLeftTree();
+}
+
 int main()
 {
-    test_constr();
+//    test_constr();
 //    test_insert();
 //    test_getItem();
 //    test_getLength();
-//    test_deleteItem();
+    test_deleteItem();
 //    test_makeEmpty();
+//    test_largest_child();
     return 0;
 }
