@@ -86,11 +86,6 @@ class BinaryTree
 	    visual_rep(root, level);
 	}
     }
-    void largestChildOfLeftTree()
-    {
-        cout << "the largest child of the left subtree is "
-	     << getLargestChild(root->left)->key << endl;
-    }
   private:
     tNode * root;
     int numNodes;
@@ -185,21 +180,13 @@ class BinaryTree
         tNode * replacementNode = getLargestChild(node->left);
 	tNode * replacementNodePar = findParentOfNode(root, temp, replacementNode->key);
 
-
-	// set replamentNodePar-> replacementNode to nullptr
-	
+	// set replamentNodePar-> replacementNode to nullptr or replacementNode->left
 	if(replacementNodePar != nullptr)
 	{
-	    if(replacementNodePar->right != nullptr)
-	    {
-	        if(replacementNodePar->right == replacementNode)
-	            replacementNodePar->right = nullptr;
-	    }
-	    if(replacementNodePar->left != nullptr)
-	    {
-	        if(replacementNodePar->right == replacementNode)
-	            replacementNodePar->right = nullptr;
-	    }
+	    if(replacementNode->left != nullptr)
+		replacementNodePar->right = replacementNode->left;
+	    else
+	        replacementNodePar->right = nullptr;
 	}
 
         // set replacementNode->right and ->left to be node->right and ->left
